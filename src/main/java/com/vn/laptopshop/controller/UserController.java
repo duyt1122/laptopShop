@@ -1,19 +1,23 @@
 package com.vn.laptopshop.controller;
 
+import com.vn.laptopshop.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+
+@Controller
 public class UserController {
 
-    @GetMapping("/user")
-    public String test(){
-        return "Only user can access this page";
+    private final UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
     }
 
-    @GetMapping("/admin")
-    public String testAdmin(){
-        return "Only Admin can access this page";
+    @RequestMapping("/")
+    public String getHomePage(){
+        return "test.html";
     }
 
 }
