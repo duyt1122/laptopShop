@@ -1,9 +1,10 @@
 package com.vn.laptopshop.controller;
 
-import com.vn.laptopshop.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.vn.laptopshop.service.UserService;
 
 
 @Controller
@@ -16,7 +17,8 @@ public class UserController {
     }
 
     @RequestMapping("/")
-    public String getHomePage(){
+    public String getHomePage(Model model){
+        model.addAttribute("test", "Test Model");
         return "test.html";
     }
 
