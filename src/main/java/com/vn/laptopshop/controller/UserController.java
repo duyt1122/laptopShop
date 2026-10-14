@@ -19,7 +19,15 @@ public class UserController {
     @RequestMapping("/")
     public String getHomePage(Model model){
         model.addAttribute("test", "Test Model");
-        return "test.html";
+        return "hello";
+    }
+
+    @RequestMapping (
+        "/admin/users"
+    )
+    public String getUsersPage(Model model){
+        model.addAttribute("users", "user");
+        return "admin/user/create";
     }
 
 }
