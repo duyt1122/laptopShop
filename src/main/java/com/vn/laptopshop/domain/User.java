@@ -3,13 +3,11 @@ package com.vn.laptopshop.domain;
 public class User {
     private long id;
     private String email;
-
     private String password;
-
     private String fullName;
-
     private String address;
     private String phone;
+    
     public long getId() {
         return id;
     }

@@ -2,8 +2,11 @@ package com.vn.laptopshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.vn.laptopshop.domain.User;
 import com.vn.laptopshop.service.UserService;
 
 
@@ -22,12 +25,17 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping (
-        "/admin/users"
-    )
+    @RequestMapping (value = "/admin/users")
     public String getUsersPage(Model model){
-        model.addAttribute("users", "user");
+        model.addAttribute("newUser", new User());
         return "admin/user/create";
+    }
+
+    @RequestMapping (value = "/admin/users1", method = RequestMethod.POST)
+    public String getUsersPage1(Model model, @ModelAttribute("newUser") User user){
+        model.addAttribute("users", "user");
+        System.out.println("user: " + user);
+        return "hello";
     }
 
 }

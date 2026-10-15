@@ -17,37 +17,11 @@
         </head>
 
         <body>
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-6 col-12 mx-auto">
-                        <h3>Create User</h3>
-                        <hr />
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label">Email:</label>
-                                <input type="email" class="form-control" placeholder="Enter your email">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password:</label>
-                                <input type="password" class="form-control" placeholder="Enter your password">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Phone Number:</label>
-                                <input type="text" class="form-control" placeholder="Enter your phone number">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Full Name:</label>
-                                <input type="text" class="form-control" placeholder="Enter your full name">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Address:</label>
-                                <input type="text" class="form-control" placeholder="Enter your address">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
+            ${test}
+            <button action="/admin/users1" method="post" class="btn btn-primary">
+                Click me!
+            </button>
         </body>
 
         </html>
