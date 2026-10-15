@@ -7,5 +7,5 @@ import com.vn.laptopshop.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-
+  
 }

@@ -1,5 +1,7 @@
 package com.vn.laptopshop.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,14 +29,20 @@ public class UserController {
 
     @RequestMapping (value = "/admin/users")
     public String getUsersPage(Model model){
-        model.addAttribute("newUser", new User());
-        return "admin/user/create";
+        List<User> users = this.userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "admin/user/table-user";
     }
 
     @RequestMapping (value = "/admin/users/create", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute("newUser") User user){
         this.userService.handleSaveUser(user);
-        return "hello";
+        return "redirect:/admin/users";
+    }
+    @RequestMapping ("/admin/users/create")
+    public String getAllUsers(Model model){
+        model.addAttribute("newUser", new User());
+        return "admin/user/create";
     }
 
 }

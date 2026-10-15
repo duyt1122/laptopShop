@@ -1,5 +1,7 @@
 package com.vn.laptopshop.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.vn.laptopshop.domain.User;
@@ -15,5 +17,9 @@ public class UserService {
 
     public User handleSaveUser(User user){
         return this.userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 }
