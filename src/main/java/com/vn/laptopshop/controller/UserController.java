@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,11 +28,19 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping (value = "/admin/users")
+    @RequestMapping ("/admin/users")
     public String getUsersPage(Model model){
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
         return "admin/user/table-user";
+    }
+
+    @RequestMapping ("/admin/user/{id}")
+    public String getUsersDetailPage(Model model, @PathVariable ("id") Long id){
+        User user = this.userService.getUserById(id);
+        // System.out.println("User: " + id);
+        model.addAttribute("user", user);
+        return "admin/user/show";
     }
 
     @RequestMapping (value = "/admin/users/create", method = RequestMethod.POST)
