@@ -43,6 +43,7 @@
                                 <label class="form-label">Address:</label>
                                 <input type="text" class="form-control" placeholder="Enter your address">
                             </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
