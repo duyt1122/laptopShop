@@ -35,6 +35,7 @@
                                     <p class="card-text"><strong>Address:</strong> ${user.address}</p>
                                 </div>
                             </div>
+                            <a href="/admin/users" class="btn btn-secondary mt-3">Back to Users</a>
                         </div>
                     </div>
             </body>
