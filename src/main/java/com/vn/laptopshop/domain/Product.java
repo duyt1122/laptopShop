@@ -29,6 +29,9 @@ public class Product {
     private String factory;
 
     private String target;
+    // Quan hệ 1 chiều
+    // @OneToMany(mappedBy= "product")
+    // private List<OrderDetail> orderDetails;
 
     public long getId() {
         return id;
