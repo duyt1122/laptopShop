@@ -34,7 +34,7 @@ public class UserController {
     public String getUsersPage(Model model){
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
 
     @RequestMapping ("/admin/user/{id}")
@@ -42,7 +42,7 @@ public class UserController {
         User user = this.userService.getUserById(id);
         // System.out.println("User: " + id);
         model.addAttribute("user", user);
-        return "admin/user/show";
+        return "admin/user/detail";
     }
 
     @RequestMapping (value = "/admin/users/create", method = RequestMethod.POST)
