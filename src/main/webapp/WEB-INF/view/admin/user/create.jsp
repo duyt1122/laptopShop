@@ -33,33 +33,51 @@
                                             <h3>Create User</h3>
                                             <hr />
                                             <form:form action="/admin/users/create" method="post"
-                                                modelAttribute="newUser">
-                                                <div class="mb-3">
+                                                modelAttribute="newUser" class="row">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
                                                     <form:input type="email" class="form-control"
                                                         placeholder="Enter your email" path="email" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Password:</label>
                                                     <form:input type="password" class="form-control"
                                                         placeholder="Enter your password" path="password" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Phone Number:</label>
                                                     <form:input type="text" class="form-control"
                                                         placeholder="Enter your phone number" path="phone" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Full Name:</label>
                                                     <form:input type="text" class="form-control"
                                                         placeholder="Enter your full name" path="fullName" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12">
                                                     <label class="form-label">Address:</label>
                                                     <form:input type="text" class="form-control"
                                                         placeholder="Enter your address" path="address" />
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="form-label">Role:</label>
+                                                    <select class="form-select">
+                                                        <option value="ADMIN">ADMIN</option>
+                                                        <option value="USER">USER</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label for="avatarFile" class="form-label">Avatar:</label>
+                                                    <input class="form-control" type="file" id="avatarFile"
+                                                        accept=".png, .jpg,.jpeg" />
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                                        id="avatarPreview" />
+                                                </div>
+                                                <div class="col-12 m-3">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
                                             </form:form>
                                         </div>
                                     </div>
