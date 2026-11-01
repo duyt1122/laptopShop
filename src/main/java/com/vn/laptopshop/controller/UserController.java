@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vn.laptopshop.domain.User;
+import com.vn.laptopshop.service.UploadService;
 import com.vn.laptopshop.service.UserService;
 
 
@@ -19,9 +21,11 @@ import com.vn.laptopshop.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final UploadService uploadService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, UploadService uploadService){
         this.userService = userService;
+        this.uploadService = uploadService;
     }
 
     @RequestMapping("/")
@@ -45,12 +49,13 @@ public class UserController {
         return "admin/user/detail";
     }
 
-    @RequestMapping (value = "/admin/users/create", method = RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser") User user){
-        this.userService.handleSaveUser(user);
+    @PostMapping(value = "/admin/users/create")
+    public String createUserPage(Model model, @ModelAttribute("newUser") User user, @RequestParam("avatarFile") MultipartFile file) {
+     String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");
+        // this.userService.handleSaveUser(user);
         return "redirect:/admin/users";
     }
-    @RequestMapping ("/admin/users/create")
+    @GetMapping ("/admin/users/create")
     public String getAllUsers(Model model){
         model.addAttribute("newUser", new User());
         return "admin/user/create";
