@@ -9,7 +9,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             <meta name="description" content="" />
             <meta name="author" content="" />
-            <title>Dashboard - SB Admin</title>
+            <title>Products</title>
             <link href="/css/styles.css" rel="stylesheet" />
             <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         </head>
@@ -21,13 +21,53 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">Dashboard</h1>
+                            <h1 class="mt-4">Products</h1>
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Product</li>
+                                <li class="breadcrumb-item active">Products</li>
                             </ol>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-12 mx-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h3>Table Product</h3>
+                                            <a href="/admin/product/create" method="post" class="btn btn-primary">Create
+                                                Product</a>
+                                        </div>
+                                        <hr />
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Factory</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <c:forEach var="user" items="${users}">
+                                                    <tr>
+                                                        <td>${user.id}</td>
+                                                        <td>${user.email}</td>
+                                                        <td>${user.fullName}</td>
+                                                        <td>${user.role}</td>
+                                                        <td>
+                                                            <a href="/admin/user/${user.id}"
+                                                                class="btn btn-success">View</a>
+                                                            <a href="/admin/user/update/${user.id}"
+                                                                class="btn btn-warning">Edit</a>
+                                                            <a href="/admin/user/delete/${user.id}"
+                                                                class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody> -->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div>Product</div>
                         </div>
                     </main>
                     <jsp:include page="../layout/footer.jsp" />
