@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vn.laptopshop.domain.User;
 import com.vn.laptopshop.service.UploadService;
 import com.vn.laptopshop.service.UserService;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -53,7 +56,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/admin/users/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User user, @RequestParam("avatarFile") MultipartFile file) {
+    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid  User user,BindingResult bindingResult, @RequestParam("avatarFile") MultipartFile file){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("newUser", user);
+            return "admin/user/create";
+        }
      String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");
      String hashPassword = this.passwordEncoder.encode(user.getPassword());
         user.setAvatar(avatar);
