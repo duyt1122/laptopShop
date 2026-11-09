@@ -1,10 +1,14 @@
 package com.vn.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity 
 @Table (name = "products")
@@ -14,6 +18,7 @@ public class Product {
     @GeneratedValue (strategy= GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank (message = "Tên sản phẩm không được để trống")
     private String name;
 
     public String getName() {
@@ -24,14 +29,19 @@ public class Product {
         this.name = name;
     }
 
+    @DecimalMin(value = "0", inclusive = false, message = "Giá sản phẩm phải lớn hơn 0")
     private double price;
 
     private String image;
 
+    @NotBlank (message = "Mô tả chi tiết sản phẩm không được để trống")
+    @Column (columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
 
+    @NotBlank (message = "Mô tả ngắn sản phẩm không được để trống")
     private String shortDesc;
 
+    @Min (value = 1, message = "Số lượng sản phẩm phải lớn hơn 0")
     private long quantity;
 
     private long sold;
