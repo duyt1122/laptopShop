@@ -18,10 +18,14 @@ public class HomePageController {
         this.productService = productService;
     }
     
-    @GetMapping("/client")
+    @GetMapping("/")
     public String homePage(Model model){
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
         return "client/homepage/show";
+    }
+    @GetMapping("/register")
+    public String registerPage() {
+        return "client/auth/register";
     }
 }
