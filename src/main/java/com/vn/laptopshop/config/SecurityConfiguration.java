@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.vn.laptopshop.service.CustomUserDetailsService;
 import com.vn.laptopshop.service.UserService;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
@@ -46,7 +48,18 @@ public class SecurityConfiguration {
 									// PHẢI disable CSRF, vì API không dùng cookies để tự động đăng nhập và chặn mọi
 									// request.
 				// .cors(Customizer.withDefaults())
-				.authorizeHttpRequests(authz -> authz.anyRequest().permitAll());
+				.authorizeHttpRequests(authz -> authz
+					 .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.INCLUDE).permitAll()
+
+					.requestMatchers("/login","/client/**","/css/**","/js/**","/images/**","/").permitAll()
+					.anyRequest().authenticated())
+				   .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
+                        .permitAll());
+
+				
 						
 				// .exceptionHandling(
 				// exceptions -> exceptions
