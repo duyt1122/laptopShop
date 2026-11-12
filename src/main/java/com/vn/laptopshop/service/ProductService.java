@@ -9,7 +9,7 @@ import com.vn.laptopshop.domain.Product;
 import com.vn.laptopshop.repository.ProductRepository;
 
 @Service
-public class ProductService {
+public class ProductService{
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
