@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.vn.laptopshop.service.CustomUserDetailsService;
 import com.vn.laptopshop.service.UserService;
@@ -39,7 +40,10 @@ public class SecurityConfiguration {
         authProvider.setHideUserNotFoundExceptions(false);
         return authProvider;
     }
-
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomSuccessHandler();
+    }
 
     @Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -52,10 +56,12 @@ public class SecurityConfiguration {
 					 .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.INCLUDE).permitAll()
 
-					.requestMatchers("/login","/client/**","/css/**","/js/**","/images/**","/").permitAll()
+					.requestMatchers("/login","/product/**","/client/**","/css/**","/js/**","/images/**","/").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated())
 				   .formLogin(formLogin -> formLogin
                         .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler())
                         .failureUrl("/login?error")
                         .permitAll());
 
