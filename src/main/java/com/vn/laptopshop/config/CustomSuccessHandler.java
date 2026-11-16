@@ -9,19 +9,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler{
 
     protected String determineTargetUrl(final Authentication authentication) {
 
     Map<String, String> roleTargetUrlMap = new HashMap<>();
-    roleTargetUrlMap.put("ROLE_USER", "/homepage.html");
-    roleTargetUrlMap.put("ROLE_ADMIN", "/console.html");
+    roleTargetUrlMap.put("ROLE_USER", "/");
+    roleTargetUrlMap.put("ROLE_ADMIN", "/admin");
 
     final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
     for (final GrantedAuthority grantedAuthority : authorities) {
@@ -33,7 +35,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
 
     throw new IllegalStateException();
 }
-
+protected void clearAuthenticationAttributes(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+        return;
+    }
+    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+}
 
     RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     @Override
@@ -46,6 +54,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
     }
 
     redirectStrategy.sendRedirect(request, response, targetUrl);
+    clearAuthenticationAttributes(request);
 }
     }
     
