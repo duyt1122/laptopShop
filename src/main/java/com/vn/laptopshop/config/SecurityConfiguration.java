@@ -56,14 +56,16 @@ public class SecurityConfiguration {
 					 .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.INCLUDE).permitAll()
 
-					.requestMatchers("/login","/product/**","/client/**","/css/**","/js/**","/images/**","/").permitAll()
+					.requestMatchers("/login","/access-deny","/product/**","/client/**","/css/**","/js/**","/images/**","/").permitAll()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated())
 				   .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .successHandler(customAuthenticationSuccessHandler())
                         .failureUrl("/login?error")
-                        .permitAll());
+                        .permitAll())
+                    .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/access-deny"));
 
 				
 						
