@@ -21,6 +21,11 @@ import jakarta.servlet.DispatcherType;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
+    private final UserService userService;
+
+    public SecurityConfiguration(UserService userService){
+          this.userService = userService;
+    }
 
     @Bean 
     public PasswordEncoder passwordEncoder() {
@@ -44,7 +49,7 @@ public class SecurityConfiguration {
     }
     @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
-        return new CustomSuccessHandler();
+        return new CustomSuccessHandler(this.userService);
     }
 
     @Bean
@@ -72,12 +77,12 @@ public SpringSessionRememberMeServices rememberMeServices() {
                     .requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated())
                     .sessionManagement((sessionManagement) -> sessionManagement
-			.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-	.invalidSessionUrl("/logout?expired")
-				.maximumSessions(1)
-	.maxSessionsPreventsLogin(false))
+			        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+	                .invalidSessionUrl("/logout?expired")
+				    .maximumSessions(1)
+	                .maxSessionsPreventsLogin(false))
 
-	.logout(logout->logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+	                .logout(logout->logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
 
                     .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
