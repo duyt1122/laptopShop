@@ -13,6 +13,8 @@ import com.vn.laptopshop.repository.CartDetailRepository;
 import com.vn.laptopshop.repository.CartRepository;
 import com.vn.laptopshop.repository.ProductRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class ProductService{
     private final ProductRepository productRepository;
@@ -48,7 +50,7 @@ public class ProductService{
         }
     }
 
-    public void handleAddProductToCart(String email,long id){
+    public void handleAddProductToCart(String email,long id,HttpSession session){
 
         User user = this.userService.findUserByEmail(email);
         if(user != null){
@@ -56,7 +58,7 @@ public class ProductService{
             if(user.getCart() == null){
                 Cart otherCart = new Cart();
                 otherCart.setUser(user);
-                otherCart.setSum(1);
+                otherCart.setSum(0);
                 cart = this.cartRepository.save(otherCart);
             }
 
@@ -65,12 +67,23 @@ public class ProductService{
             Optional<Product> optionalProduct = this.productRepository.findById(id);
             if(optionalProduct.isPresent()){
                 Product p = optionalProduct.get();
-                CartDetail cd = new CartDetail();
+                CartDetail oldDetail = this.cartDetailRepository.findByCartAndProduct(cart, p);
+                if(oldDetail == null){
+                  CartDetail cd = new CartDetail();
                 cd.setCart(cart);
                 cd.setProduct(p);
                 cd.setPrice(p.getPrice());
                 cd.setQuantity(1);
-            this.cartDetailRepository.save(cd);
+                   this.cartDetailRepository.save(cd);
+                   int c = cart.getSum() + 1;
+                   cart.setSum(c);
+                   this.cartRepository.save(cart);
+                   session.setAttribute("sum", c);
+                }else{
+                    oldDetail.setQuantity(oldDetail.getQuantity() + 1);
+                    this.cartDetailRepository.save(oldDetail);
+                }
+                
 
             }
 
