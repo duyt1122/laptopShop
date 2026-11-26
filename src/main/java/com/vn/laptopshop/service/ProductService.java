@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vn.laptopshop.domain.Cart;
 import com.vn.laptopshop.domain.CartDetail;
@@ -92,27 +93,18 @@ public class ProductService{
 
     }
 
+    @Transactional
     public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
         Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(cartDetailId);
         if (cartDetailOptional.isPresent()) {
             CartDetail cartDetail = cartDetailOptional.get();
-
             Cart currentCart = cartDetail.getCart();
-            // delete cart-detail
-            this.cartDetailRepository.deleteById(cartDetailId);
+            this.cartDetailRepository.delete(cartDetail);
 
-            // update cart
-            if (currentCart.getSum() > 1) {
-                // update current cart
-                int s = currentCart.getSum() - 1;
-                currentCart.setSum(s);
-                session.setAttribute("sum", s);
-                this.cartRepository.save(currentCart);
-            } else {
-                // delete cart (sum = 1)
-                this.cartRepository.deleteById(currentCart.getId());
-                session.setAttribute("sum", 0);
-            }
+            int remainingItems = Math.max(0, currentCart.getSum() - 1);
+            currentCart.setSum(remainingItems);
+            this.cartRepository.save(currentCart);
+            session.setAttribute("sum", remainingItems);
         }
     }
 
