@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -73,6 +74,13 @@ public class ItemController {
         long cartDetailId = id;
         this.productService.handleRemoveCartDetail(cartDetailId, session);
         return "redirect:/cart";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String getCheckOutPage(@ModelAttribute("cart") Cart cart) {
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+        this.productService.handleUpdateCartBeforeCheckout(cartDetails);
+        return "redirect:/checkout";
     }
 
 }
